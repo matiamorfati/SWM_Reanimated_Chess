@@ -1,4 +1,6 @@
 import { Button, Text, View } from "react-native";
+import { Game } from "js-chess-engine";
+import type { BoardConfig, MovesMap } from "js-chess-engine";
 
 import type { RootStackScreenProps } from "../types/navigationTypes";
 
@@ -7,6 +9,8 @@ export function GameScreen({
   route,
 }: RootStackScreenProps<"Game">) {
   const { difficulty } = route.params;
+
+  const game = new Game();
 
   return (
     <View>

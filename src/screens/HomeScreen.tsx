@@ -1,5 +1,4 @@
 import { Button, Text, View } from "react-native";
-
 import type { RootStackScreenProps } from "../types/navigationTypes";
 
 export function HomeScreen({ navigation }: RootStackScreenProps<"Home">) {
