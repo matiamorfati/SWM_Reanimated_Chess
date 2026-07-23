@@ -10,29 +10,17 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: "Home" }}
-      />
-      <Stack.Screen
-        name="Game"
-        component={GameScreen}
-        options={{ title: "Game" }}
-      />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: "Settings" }}
-      />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Game" component={GameScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen
         name="GameOver"
         component={GameOverScreen}
-        options={{
-          title: "Game over",
-          gestureEnabled: false,
-        }}
+        options={{ gestureEnabled: false }}
       />
     </Stack.Navigator>
   );

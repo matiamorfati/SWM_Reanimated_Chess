@@ -38,6 +38,14 @@ function normalize(square: Square): Square {
   return square.toUpperCase();
 }
 
+function snapshotBoard(board: BoardConfig): BoardConfig {
+  return {
+    ...board,
+    pieces: { ...board.pieces },
+    castling: board.castling ? { ...board.castling } : board.castling,
+  };
+}
+
 function parsePlayedMove(played: PlayedMove): { from: Square; to: Square } {
   const from = Object.keys(played)[0];
   if (!from) {
@@ -67,7 +75,7 @@ export function createChessEngine(initial?: BoardConfiguration): ChessEngine {
   const game = new Game(initial);
 
   return {
-    getBoard: () => game.exportJson(),
+    getBoard: () => snapshotBoard(game.exportJson()),
 
     getFen: () => game.exportFEN(),
 
@@ -87,19 +95,19 @@ export function createChessEngine(initial?: BoardConfiguration): ChessEngine {
         return { ok: false };
       }
 
-      const before = game.exportJson();
+      const before = snapshotBoard(game.exportJson());
       game.move(fromSq, toSq);
-      const after = game.exportJson();
+      const after = snapshotBoard(game.exportJson());
       const event = classifyMove(before, after, fromSq, toSq);
 
       return { ok: true, board: after, event };
     },
 
     playAi: (level = 2) => {
-      const before = game.exportJson();
+      const before = snapshotBoard(game.exportJson());
       const played = game.aiMove(level);
       const { from, to } = parsePlayedMove(played);
-      const after = game.exportJson();
+      const after = snapshotBoard(game.exportJson());
       const event = classifyMove(before, after, from, to);
 
       return { from, to, board: after, event };
@@ -107,7 +115,7 @@ export function createChessEngine(initial?: BoardConfiguration): ChessEngine {
 
     setPiece: (square, piece) => {
       game.setPiece(normalize(square), piece);
-      return game.exportJson();
+      return snapshotBoard(game.exportJson());
     },
 
     getResult: (playerColor = "white") =>

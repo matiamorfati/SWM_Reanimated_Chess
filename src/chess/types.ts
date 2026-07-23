@@ -19,3 +19,10 @@ export type MoveEvent = {
 };
 
 export type GameResult = "win" | "loss" | "draw" | null;
+
+export type PieceMotionSource = "player" | "ai";
+
+export type PieceMotion = {
+  ids: string[];
+  source: PieceMotionSource;
+};
